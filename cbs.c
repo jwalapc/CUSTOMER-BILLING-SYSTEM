@@ -1,360 +1,208 @@
 #include<stdio.h>
-#include<string.h>
-#include<ctype.h>
-struct itm
-{
-	int prno;
-	char prname[10];
-	int qty;
-	int price;
-}it;
-struct customer
-{
-	int prno;
-	char prname[10];
-	int qty;
-	int price;
-	int amount;
-}cst[100];
-struct tempor
-{
-	int prno;
-	char prname[10];
-	int qty;
-	int price;
-	int amount;
-}cstr[100];
-int t=0,n=0,k=0,ba=0,ti=0; 
-///function section*********************
-void create()
-{
-	int i=0;
-	FILE *fp,*fpq;
-	fp=fopen("shop.txt","w");
-	if(fp==NULL)
-	{
-		printf("ERROR\n");
-		exit(0);
-	}
-	printf("enter the number of records\n");
-	scanf("%d",&n);
-	fpq=fopen("asd.txt","w");
-	fprintf(fpq,"%d",n);
-	fclose(fpq);
-	while(i<n)
-	{
-		printf("enter the product code\n");
-		scanf("%d",&it.prno);
-		printf("enter the name\n");
-		scanf("%s",it.prname);
-		printf("enter the quantity\n");
-		scanf("%d",&it.qty);
-		printf("enter the price\n");
-		scanf("%d",&it.price);
-		i++;
-		fprintf(fp,"%d\t%s\t%d\t%d\t",it.prno,it.prname,it.qty,it.price);
-	}
-	//fprintf(fp,"%d",0);
-	fclose(fp);
-	printf("\n records are being created so please come back again\n");
-//	exit(0);
-}
-/////function 2***********
-void bill()
-{
-int na,a,cont=0,k,r=0,w=0,ch,l=0,bi=0,ln=0;
-//char k;
-l3 : printf("enter the product number\n");
-scanf("%d",&na);
-FILE *fp,*fptr;
-fp=fopen("shop.txt","r");
-fptr=fopen("temp.txt","w");
-while(!(feof(fp)))
-{
-	l++;
-fscanf(fp,"%d",&it.prno);
-fscanf(fp,"%s",it.prname);
-fscanf(fp,"%d",&it.qty);
-fscanf(fp,"%d",&it.price);
-if(it.prno==na)
-{
-	ln++;
-	if(ln==2)
-	break;
-	printf("enter the quantity\n");
-	scanf("%d",&a);
-	if(a<=it.qty)
-	{
-		cst[ti].prno=it.prno;
-		strcpy(cst[ti].prname,it.prname);
-		cst[ti].qty=a;
-		cst[ti].price=it.price;
-		it.qty=it.qty-a;
-		ti++;
-		//goto l1;	
-	}
-	else
-	printf("out of stock\n");
-	bi++;
-	//goto l1;	
-}
-else
-{
-	cont++;
-    fprintf(fptr,"%d\t",it.prno);
-    fprintf(fptr,"%s\t",it.prname);
-    fprintf(fptr,"%d\t",it.qty);
-    fprintf(fptr,"%d\t",it.price);
-	continue;
-}
-fprintf(fptr,"%d\t",it.prno);
-fprintf(fptr,"%s\t",it.prname);
-fprintf(fptr,"%d\t",it.qty);
-fprintf(fptr,"%d\t",it.price);
-}
-if(l==cont)
-printf("error\nchoose proprly\n");
-fclose(fptr);
-fclose(fp);
-remove("shop.txt");
-rename("temp.txt","shop.txt");
-ln=0;
-printf("do you want to shop more\npress 1 for yes\n");
-scanf("%d",&k);
-if(k==1)
-goto l3;
+ #include<conio.h>
+ #include<stdlib.h>
+ #include <cstring>
 
-}
-void display()
-{
-	int nk=0;
-    FILE *fp;
-	fp=fopen("shop.txt","r");	
-	if(feof(fp))
-	{
-		printf("error in opening file\n");
-		exit(0);
-	}
-	printf("================================================================================\n");
-	printf("\t|product number\t|product name\t|quantity\t|price\t|\n");
-	printf("=================================================================================\n");
-	while(nk!=n)
-	{
-		nk++;
-		fscanf(fp,"%d",&it.prno);
-		if(it.prno==0)
-		{
-		printf("product number cannot be zero\n");
-		break;
-		}
-		fscanf(fp,"%s",it.prname);
-		fscanf(fp,"%d",&it.qty);
-		fscanf(fp,"%d",&it.price);
-		printf("\n\t  %14d|\t%8s|\t%8d|\t%d|\n",it.prno,it.prname,it.qty,it.price);		
-	}
-	fclose(fp);
-}
-////functin section*******************	
-void edit()
-{
-    FILE *fp,*fptr,*fpk;
-	int h,found=0,ka=0,z,p;
-	fp=fopen("shop.txt","r");
-	fptr=fopen("temp1.txt","w");
-	fpk=fopen("temp2.txt","w");
-	printf("enter the product number to delete\n");
-	scanf("%d",&h);
-	p=n;
-	while(!(ka==p))
-	{
-		ka++;
-		fscanf(fp,"%d",&it.prno);
-		if(it.prno==h)
-		{
-			found=1;
-			fscanf(fp,"%s",it.prname);
-			fscanf(fp,"%d",&it.qty);
-			fscanf(fp,"%d",&it.price);
-			n--;
-			printf("product has been sucessfully deleted\n");
-		}
-		else
-		{ 
-			fscanf(fp,"%s",it.prname);
-			fscanf(fp,"%d",&it.qty);
-			fscanf(fp,"%d",&it.price);
-			fprintf(fptr,"%d\t%s\t%d\t%d\t",it.prno,it.prname,it.qty,it.price);
-		}
-	}
-	    fprintf(fpk,"%d",n);
-	    fclose(fpk);
-		fclose(fptr);
-		fclose(fp);
-		if(found==0)
-		printf("\n product not found\n");
-		remove("asd.txt");
-		rename("temp2.txt","asd.txt");
-		remove("shop.txt");
-		rename("temp1.txt","shop.txt");
-	}
 
-void invoice()
-{
-	int i,j,o;
-	float amt,gt=0;
-	if(ti==0)
-	
-	{printf("no products in your cart\n");
-	exit(0);}
-	printf("\n\n********************INVOICE**********************\n");
-	printf("================================================================================\n");
-	printf("product number\t| product name\t| price\t| quantity\t| amount\t|\n");
-	printf("================================================================================\n");
-	for(o=0;o<ti;o++)
+ void input();
+ void writefile();
+ void search();
+ void output();
+
+ struct date{
+	   int month;
+	   int day;
+	   int year;
+	   };
+
+  struct account {
+	int number;
+	char name[100];
+	int acct_no;
+	float mobile_no;
+	char street[100];
+	char city[100];
+	char acct_type;
+	float oldbalance;
+	float newbalance;
+	float payment;
+	struct date lastpayment;
+  }customer;
+  int tl,sl,ts;
+ int main()
 	{
-		cst[o].amount=0;
-		cst[o].amount=(cst[o].qty)*(cst[o].price);
-		gt=gt+cst[o].amount;		
-	}
-	for(j=0;j<ti;j++)
-	{
-		printf("%6d\t       |%9s   \t  | %3d\t|%3d\t        |   %3d\n",cst[j].prno,cst[j].prname,cst[j].price,cst[j].qty,cst[j].amount);
-	}
-	printf("\n amount payable is %f",gt);
-	printf("thank you for shopping\ncome again\n");
-	exit(0);
-}
-void mdelete()
-{
-	int i,j,f,g=0,aj=0,ag=0;
-	char ab[100];
-	FILE *fw,*fq;
-	printf("enter the product number to be deleted\n");
-	scanf("%d",&f);
-	for(i=0;i<ti;i++)
-	{
-	  if(cst[i].prno==f)
-	  {aj=cst[i].qty;
-	  printf("\nproduct deleted successfully\n");} 
-	  continue;
-	  cstr[g].prno=cst[i].prno;
-	  strcpy(cstr[g].prname,cst[i].prname);
-	  cstr[g].qty=cst[i].qty; 
-	  cstr[g].price=cst[i].price;
-	  g++;
-	}
-	for(j=0;j<g;j++)
-	{
-	 cst[j].prno=cstr[j].prno;
- 	 strcpy(cst[j].prname,cstr[j].prname);
-	  cst[j].qty=cstr[j].qty; 
-	  cst[j].price=cstr[j].price;
-	}
-	ti=g;
-	printf("\n%d",aj);
-	fq=fopen("shop.txt","r");
-	fw=fopen("temp4.txt","w");
-	for(j=0;j<n;j++)
-	{
-		    fscanf(fq,"%d",&it.prno);
-		    fscanf(fq,"%s",it.prname);
-			fscanf(fq,"%d",&it.qty);
-			fscanf(fq,"%d",&it.price);
-			if(it.prno==f)
-			{ag=aj+it.qty;
-			fprintf(fw,"%d\t%s\t%d\t%d\t",it.prno,it.prname,ag,it.price);}
-            else
-			fprintf(fw,"%d\t%s\t%d\t%d\t",it.prno,it.prname,it.qty,it.price);	
+	  int i,n;
+	  char ch;
+	  printf("   CUSTOMER BILLING SYSTEM:\n\n");
+	  printf("===============================\n");
+	  printf("\n1:    to add account on list\n");
+	  printf("2:    to search customer account\n");
+	  printf("3:    exit\n");
+	  printf("\n================================\n");
+	  do{
+	       printf("\nselect what do you want to do?");
+	       ch=getche();
+	  }while(ch<='0' || ch>'3');
+	  switch(ch){
+		case '1':
 			
-	}
-	fclose(fq);
-    fclose(fw);
-    remove("shop.txt");
-    rename("temp4.txt","shop.txt");
-}
-void mdisplay()
-{
-	int i,j,o;
-	printf("================================================================================\n");
-	printf("product number\t|product name\t|quantity\t|price\t\n");
-	printf("================================================================================\n");
-	for(o=0;o<ti;o++)
-	{
-		printf("%14d\t|%12s\t|%6d\t|%6d\n",cst[o].prno,cst[o].prname,cst[o].qty,cst[o].price);
-	}
-}
+			printf("\nhow many customer accounts?");
+			scanf("%d",&n);
+			for(i=0;i<n;i++){
+				input();
+				if(customer.payment>0)
+					customer.acct_type=(customer.payment<0.1*customer.oldbalance)? 'O': 'D';
+				else
+					customer.acct_type=(customer.oldbalance>0)?'D' : 'C';
+				customer.newbalance=customer.oldbalance - customer.payment;
+				writefile();
+			}
+			main();
+		case '2':
+	
+			printf("search by what?\n");
+			printf("\n1 --- search by customer number\n");
+			printf("2 --- search by customer name\n");
+			search();
+			ch=getche();
+			main();
+	  }
+ }
 
-main()
-{
-	char ch,password[10],q[10]="yatish";
-	int s=0,y=0,w=1,i;
-	FILE *fpe;
-	fpe=fopen("asd.txt","r");
-	fscanf(fpe,"%d",&n);
-	fclose(fpe);
-	printf("\t********WELCOME TO DENIMXPRESS**************\n\n");
-	printf("\t        YOU ARE LUCKY TO BE SHOPPING HERE\n");
-	printf("\tplease note that all the products' price are discounted and are genuine\n\tso no bargain\n");
-	printf("\treference number%d\n",n);
-	q: printf("\n\n\t01. ADMINISTRATOR\n\t02. CUSTOMER\n\t03.BREAK\n");
-	scanf("%d",&s);
-	switch(s)
-	{
-	          case 1: printf("\tenter password\n\t");
-              for(i=0;i<6;i++)
-              {
-              ch = getch();
-              password[i] = ch;
-              ch = '*' ;
-               printf("%c",ch);
-              }
-              password[i]='\0';
-              if(strcmp(password,q))
-              { 
-              printf("wrong password try again");
-              goto q;
-             }
-               else
-               goto l3;
-               l3: printf("\n\tacess granted\n");
-		       printf("\t01.CREATE\n\t02.DELETE/MODIFY\n\t03.DISPLAY\n\t04.MAIN MENUE\n");
-		        scanf("%d",&y);
-		        switch(y)
-		        {
-        			case 1:create();
-        			      goto q;
-  			      case 2:edit();
-  			             goto q;
-                  case 3:display();
-                         goto q;
-                  case 4: goto q;
-                  default : printf("error\n");
-				  goto q;       
-        		}
-		         break;
-       case 2: printf("\t01.BILL\n\t02.INVOICE\n\t03.DISPLAY\n\t04.MY CART\n\t05.MAIN MENUE\n\t06. DELETE ITEMS IN CART\n");
-              scanf("%d",&y);
-              switch(y)
-		        {
-        			case 1:bill();
-        			      goto q;
-  			      case 2:invoice();
-  			             goto q;
-                  case 3:display();
-                         goto q;
-                  case 4: mdisplay();
-                  goto q;
-                  case 5: goto q;
-                  case 6: mdelete();
-                  goto q;
-                  default : printf("error\n"); 
-				  goto q;      
-        		}
-		         break;
-      case 3: printf("breaking...\n");
-      break;
-       default : printf("error\n");
-       break;       
-	}	
-}
 
+   void input()
+	{
+	  FILE *fp=fopen("bidur.dat","rb");
+	  fseek (fp,0,SEEK_END);
+	  tl=ftell(fp);
+	  sl=sizeof(customer);
+	  ts=tl/sl;
+	  fseek(fp,(ts-1)*sl,SEEK_SET);
+	  fread(&customer,sizeof(customer),1,fp);
+	  printf("\ncustomer no:%d\n",++customer.number);
+	  fclose(fp);
+	  printf("         Account number:");
+	  scanf("%d",&customer.acct_no);
+	  printf("\n       Name:");
+	  scanf("%s",customer.name);
+	  printf("\n       mobile no:");
+	  scanf("%f",&customer.mobile_no);
+	  printf("         Street:");
+	  scanf("%s",customer.street);
+	  printf("         City:");
+	  scanf("%s",customer.city);
+	  printf("         Previous balance:");
+	  scanf("%f",&customer.oldbalance);
+	  printf("         Current payment:");
+	  scanf("%f",&customer.payment);
+	  printf("         Payment date(mm/dd/yyyy):");
+	  scanf("%d/%d/%d",&customer.lastpayment.month,&customer.lastpayment.day,&customer.lastpayment.year);
+	  return;
+   }
+
+   void writefile()
+   {
+	  FILE *fp;
+	  fp=fopen("bidur.dat","ab");
+	  fwrite(&customer,sizeof(customer),1,fp);
+	  fclose(fp);
+	  return;
+   }
+
+   void search()
+   {
+	 char ch;
+	 char nam[100];
+	 int n,i,m=1;
+	 FILE *fp;
+	 fp=fopen("bidur.dat","rb");
+	 do{
+		printf("\nenter your choice:");
+		ch=getche();
+	 }while(ch!='1' && ch!='2');
+	 switch(ch){
+	      case '1':
+		    fseek(fp,0,SEEK_END);
+		    tl=ftell(fp);
+		    sl=sizeof(customer);
+		    ts=tl/sl;
+		    do{
+			printf("\nchoose customer number:");
+			scanf("%d",&n);
+			if(n<=0 || n>ts)
+			printf("\nenter correct\n");
+			else{
+			    fseek(fp,(n-1)*sl,SEEK_SET);
+			    fread(&customer,sl,1,fp);
+			    output();
+			}
+			printf("\n\nagain?(y/n)");
+			ch=getche();
+		    }while(ch=='y');
+		    fclose(fp);
+		    break;
+	      case '2':
+		    fseek(fp,0,SEEK_END);
+		    tl=ftell(fp);
+		    sl=sizeof(customer);
+		    ts=tl/sl;
+		    fseek(fp,(ts-1)*sl,SEEK_SET);
+		    fread(&customer,sizeof(customer),1,fp);
+		    n=customer.number;
+
+		    do{
+			printf("\nenter the name:");
+			scanf("%s",nam);
+			fseek(fp,0,SEEK_SET);
+			for(i=1;i<=n;i++)
+			{
+			     fread(&customer,sizeof(customer),1,fp);
+			     if(strcmp(customer.name,nam)==0)
+			     {
+				output();
+				m=0;
+				break;
+			     }
+			}
+			if(m!=0)
+			printf("\n\ndoesn't exist\n");
+			printf("\nanother?(y/n)");
+			ch=getche();
+		    }while(ch=='y');
+		    fclose(fp);
+	      }
+	      return;
+	 }
+
+
+
+   void output()
+	 {
+	   printf("\n\n    Customer no    :%d\n",customer.number);
+	   printf("    Name 	   :%s\n",customer.name);
+	   printf("    Mobile no      :%.f\n",customer.mobile_no);
+	   printf("    Account number :%d\n",customer.acct_no);
+	   printf("    Street         :%s\n",customer.street);
+	   printf("    City           :%s\n",customer.city);
+	   printf("    Old balance    :%.2f\n",customer.oldbalance);
+	   printf("    Current payment:%.2f\n",customer.payment);
+	   printf("    New balance    :%.2f\n",customer.newbalance);
+	   printf("    Payment date   :%d/%d/%d\n\n",customer.lastpayment.month,customer.lastpayment.day,customer.lastpayment.year);
+	   printf("    Account status :");
+	   switch(customer.acct_type)
+	      {
+	      case 'C':
+		  printf("CURRENT\n\n");
+		 break;
+	      case 'O':
+		  printf("OVERDUE\n\n");
+		 break;
+	      case 'D':
+		  printf("DELINQUENT\n\n");
+		 break;
+	      default:
+		  printf("ERROR\\n\n");
+	      }
+
+	      return;
+	   }
